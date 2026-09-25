@@ -41,37 +41,48 @@ Welcome to **CityNews360**, a news website integrated with a **MySQL database** 
 3. Click **Start** next to **Apache**.
 4. Click **Start** next to **MySQL**.
 
-### Step 2: Deploy Project to XAMPP htdocs
-1. Copy the entire `CityNews360` folder to your XAMPP web root directory:
+### Step 2: Clone the Project
+Open PowerShell and clone the repository into your XAMPP web root:
    ```
-   C:\xampp\htdocs\CityNews360
+  cd C:\xampp\htdocs
+  git clone https://github.com/lasithahansamal/web-application-citynews360.git CityNews360
    ```
 
-### Step 3: Database Setup (Automatic or Manual)
+### Step 3: Create and Seed the Database
 
-#### Option A: Automatic Creation (Recommended)
-Simply open the website in your browser (`http://localhost/CityNews360/index.php`). The application will automatically detect if `citynews360_db` exists; if not, it will:
-1. Create the database `citynews360_db`.
-2. Create all required tables (`users`, `categories`, `articles`, `contact_messages`).
-3. Seed the default admin account and sample news articles.
-
-#### Option B: Manual SQL Import via phpMyAdmin
-1. Open your browser and navigate to:
+The database must be imported once before running the site. The SQL file creates `citynews360_db`, its tables, and sample records.
+1. Open phpMyAdmin:
    ```
    http://localhost/phpmyadmin
    ```
-2. Click on **Import** in the top navigation menu.
-3. Click **Choose File** and select:
+2. From the phpMyAdmin server home, choose **Import**.
+3. Select this file from the cloned project:
    ```
-   C:\xampp\htdocs\CityNews360\database\citynews360_db.sql
+  C:\xampp\htdocs\CityNews360\database\citynews360_db.sql
    ```
-4. Click **Import** at the bottom of the page.
+4. Click **Import**. The SQL script creates the database and loads the sample content.
+
+### Step 4: Start the Website
+
+With Apache and MySQL running in XAMPP, open:
+```
+http://localhost/CityNews360/index.php
+```
+
+Alternatively, keep MySQL running in XAMPP and run PHP's built-in server from the project folder:
+```powershell
+cd C:\xampp\htdocs\CityNews360
+php -S 127.0.0.1:8000
+```
+Then visit `http://127.0.0.1:8000`.
+
+PHP must run through Apache or PHP's built-in server; opening the `.php` files directly will not work.
 
 ---
 
 ## 🔑 Database Credentials & Configuration
 
-Database settings use standard XAMPP defaults and can be overridden with environment variables:
+Database settings use standard XAMPP defaults (`127.0.0.1:3306`, user `root`, blank password) and can be overridden with environment variables:
 📄 `config/db.php`
 
 ```php
@@ -82,7 +93,7 @@ CITYNEWS360_DB_USER=root
 CITYNEWS360_DB_PASS=
 ```
 
-Set these variables in the environment used by PHP. Alternatively, change the fallback values in `config/db.php` for a local setup.
+Set these variables in the environment used by PHP. Alternatively, change the fallback values in `config/db.php` if your MySQL host, port, or credentials differ. The PHP code initializes missing tables after it connects, but the database itself must exist first; the SQL import above creates it.
 
 ---
 
