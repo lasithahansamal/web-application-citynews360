@@ -1,0 +1,6 @@
+.env
+.env.*
+!.env.example
+config/db.local.php
+*.log
+/vendor/
